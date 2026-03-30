@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMPC Dataset | Multimodal Psychological Counseling</title>
+    <!-- 引入Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入Chart.js用于数据可视化 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <!-- 自定义样式 -->
+    <style>
+        :root {
+            --primary-color: #0f3460;
+            --secondary-color: #1a508b;
+            --accent-color: #3282b8;
+            --light-color: #eef2f5;
+            --dark-color: #0a1e3c;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 100px 0 80px;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+        .section-padding {
+            padding: 80px 0;
+        }
+        .bg-light {
+            background-color: var(--light-color) !important;
+        }
+        .bg-dark {
+            background-color: var(--dark-color) !important;
+            color: white;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        .table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        .btn-primary {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            font-weight: 500;
+            padding: 10px 25px;
+            border-radius: 50px;
+        }
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        .footer {
+            padding: 40px 0;
+            background-color: var(--primary-color);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#hero">GMPC Dataset</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#overview">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#statistics">Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#annotation">Annotation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#demo">Demo</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero首屏区域 -->
+    <section id="hero" class="hero-section">
+        <div class="container text-center">
+            <h1 class="hero-title">GMPC Dataset</h1>
+            <p class="hero-subtitle">
+                Generated Multimodal Psychological Counseling Dataset<br>
+                A High-Quality Tri-Modal Benchmark for AI-driven Mental Health Support
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="#overview" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview概述区域 -->
+    <section id="overview" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Dataset Overview</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <p class="lead mb-4">
+                        Mental health issues have emerged as a major global public health challenge, with 71% of people with mental disorders in low-income countries lacking access to timely psychological treatment. 
+                        While Multimodal Large Language Models (MLLMs) show great potential in AI-driven psychological counseling, their development is severely hindered by the scarcity of high-quality multimodal counseling data, due to privacy constraints, insufficient professional annotations, and poor emotional expressiveness of existing synthetic data.
+                    </p>
+                    <p class="mb-4">
+                        To address these challenges, we construct the <strong>GMPC (Generated Multimodal Psychological Counseling) Dataset</strong>, a high-quality tri-modal benchmark enriched with fine-grained psychological annotations for downstream MLLM training and evaluation in mental health support. It fills the gap of high-quality multimodal datasets in the psychological counseling field, and establishes a reliable foundation for related MLLM research.
+                    </p>
+                    <div class="row mt-5 g-4">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card text-center p-4">
+                                <h3 class="text-primary fw-bold">951</h3>
+                                <p class="mb-0">Bilingual Counseling Sessions</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card text-center p-4">
+                                <h3 class="text-primary fw-bold">13h</h3>
+                                <p class="mb-0">Audio-Visual Materials</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card text-center p-4">
+                                <h3 class="text-primary fw-bold">5,854</h3>
+                                <p class="mb-0">Annotated Utterances</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="card text-center p-4">
+                                <h3 class="text-primary fw-bold">8</h3>
+                                <p class="mb-0">Professional Annotation Categories</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics统计数据区域 -->
+    <section id="statistics" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Dataset Statistics</h2>
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-header">
+                            Bilingual Statistics of GMPC
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Total</th>
+                                            <th>English</th>
+                                            <th>Chinese</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Unique Speakers</td>
+                                            <td>189</td>
+                                            <td>114</td>
+                                            <td>75</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Counseling Sessions</td>
+                                            <td>951</td>
+                                            <td>520</td>
+                                            <td>431</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Utterances</td>
+                                            <td>5,854</td>
+                                            <td>2,703</td>
+                                            <td>3,151</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Avg. Utt / Session</td>
+                                            <td>12.60</td>
+                                            <td>6.81</td>
+                                            <td>7.52</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Speech Duration (min)</td>
+                                            <td>795.3</td>
+                                            <td>306.1</td>
+                                            <td>489.2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Avg. Duration / Utt (s)</td>
+                                            <td>8.17</td>
+                                            <td>6.82</td>
+                                            <td>9.34</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card p-4">
+                        <h5 class="fw-bold text-center mb-4">Dialog Topic Distribution</h5>
+                        <canvas id="topicChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Annotation标注体系区域 -->
+    <section id="annotation" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Professional Annotation System</h2>
+            <p class="text-center lead mb-5">
+                GMPC provides 8 categories of fine-grained annotations grounded in psychotherapy theories, all validated by certified psychological counselors.
+            </p>
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Label Categories in GMPC
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Label Name</th>
+                                            <th>Explanation</th>
+                                            <th>Top-3 Frequent Representations</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Topic</strong></td>
+                                            <td>The main psychological problem of client</td>
+                                            <td>Depression, Appearance anxiety, Partner relationship</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Background</strong></td>
+                                            <td>Dialog context containing consultation reason and client identity</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Stage</strong></td>
+                                            <td>The period in which psychological issues are developing</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Guide</strong></td>
+                                            <td>Guidelines for therapists' speech in psychotherapy methods</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Psychotherapy</strong></td>
+                                            <td>Psychological treatment methods adopted by the therapist</td>
+                                            <td>SFBT, CBT, Psychoanalytic</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Reasoning</strong></td>
+                                            <td>Reason for the therapist to use a specific treatment method</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Client's emotion</strong></td>
+                                            <td>Clients' emotions in every utterance</td>
+                                            <td>Neutral, Anxiety, Happy</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Therapist's strategy</strong></td>
+                                            <td>Behavioral strategies taken by the therapist per utterance</td>
+                                            <td>Question, Reflection of feelings, Reassurance</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 伦理声明区域 -->
+    <section class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Ethics Statement</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card p-4">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                This study adheres to academic and global privacy guidelines including GDPR. All raw textual data are sourced from public, ethically compliant counseling resources with strict anonymization of personally identifiable information.
+                            </li>
+                            <li class="mb-3">
+                                Synthetic audio/video content of GMPC is generated without replicating biometrics of real individuals, and validated by 5 licensed psychological experts to avoid harmful or misleading information.
+                            </li>
+                            <li>
+                                The GMPC dataset is restricted to <strong>academic research only</strong>, and is prohibited for commercial or clinical use. We prioritize ethical integrity to mitigate risks while supporting AI research on mental health.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo视频演示区域 -->
+    <section id="demo" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Dataset Demo Video</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="video-container">
+                        <!-- 注意：这里必须使用相对路径（不要用 /xxx 这种根路径），否则挂到子路径（/repo/）下会找不到资源 -->
+                        <video src="assets/example.mp4" controls preload="metadata" poster="">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <p class="text-center text-muted mt-3">
+                        Multimodal dialog sample from GMPC dataset, showing annotated text content, paralinguistic-enhanced audio and emotion-aligned video.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="mb-0">© 2026 GMPC Dataset</p>
+        </div>
+    </footer>
+
+    <!-- 引入Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 图表初始化脚本 -->
+    <script>
+        // 话题分布饼图
+        const topicCtx = document.getElementById('topicChart').getContext('2d');
+        new Chart(topicCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Social Issues', 'Partner Relationship', 'Child-Parent Relationship', 'Appearance Anxiety', 'Depression', 'School Bullying', 'Friend Problems'],
+                datasets: [{
+                    data: [45.1, 21.3, 18.9, 11.8, 8.81, 2.58, 1.51],
+                    backgroundColor: [
+                        '#0f3460', '#1a508b', '#3282b8', '#0077b6', '#0096c7', '#48cae4', '#90e0ef'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 导航栏滚动效果
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
