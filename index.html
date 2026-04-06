@@ -6,6 +6,8 @@
     <title>GMPC Dataset | Multimodal Psychological Counseling</title>
     <!-- 引入Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入Font Awesome图标库（用于GitHub图标） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 引入Chart.js用于数据可视化 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
     <!-- 自定义样式 -->
@@ -166,6 +168,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#demo">Demo</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/sunzekai795/gmpc" target="_blank">
+                            <i class="fab fa-github me-1"></i> GitHub
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -259,9 +266,9 @@
                                         </tr>
                                         <tr>
                                             <td>Counseling Sessions</td>
-                                            <td>951</td>
-                                            <td>520</td>
-                                            <td>431</td>
+                                            <td>816</td>
+                                            <td>397</td>
+                                            <td>419</td>
                                         </tr>
                                         <tr>
                                             <td>Total Utterances</td>
@@ -271,7 +278,7 @@
                                         </tr>
                                         <tr>
                                             <td>Avg. Utt / Session</td>
-                                            <td>12.60</td>
+                                            <td>7.17</td>
                                             <td>6.81</td>
                                             <td>7.52</td>
                                         </tr>
@@ -409,8 +416,9 @@
                 <div class="col-lg-10">
                     <div class="video-container">
                         <!-- 注意：这里必须使用相对路径（不要用 /xxx 这种根路径），否则挂到子路径（/repo/）下会找不到资源 -->
-                        <video src="assets/example.mp4" controls preload="metadata" poster="">
-                            Your browser does not support the video tag.
+                        <video controls preload="metadata" poster="">
+                            <source src="assets/demo/example.mp4" type="video/mp4">
+                            Your browser does not support the video tag. Please update to a more modern browser.
                         </video>
                     </div>
                     <p class="text-center text-muted mt-3">
