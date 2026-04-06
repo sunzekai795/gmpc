@@ -1,2 +1,2 @@
 # gmpc
-release repo for GMPC
+This is the release repository for the GMPC dataset, with different synthetic versions of GMPC being continuously updated...
