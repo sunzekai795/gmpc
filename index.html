@@ -122,6 +122,9 @@
             overflow: hidden;
             border-radius: 10px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            background: #000;
+            max-width: 720px;
+            margin: 0 auto;
         }
         .video-container video {
             position: absolute;
@@ -130,6 +133,7 @@
             width: 100%;
             height: 100%;
             border-radius: 10px;
+            object-fit: cover;
         }
         .footer {
             padding: 40px 0;
@@ -169,7 +173,7 @@
                         <a class="nav-link" href="#demo">Demo</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/sunzekai795/gmpc" target="_blank">
+                        <a class="nav-link" href="https://github.com/sunzekai795/gmpc" target="_blank" rel="noopener noreferrer">
                             <i class="fab fa-github me-1"></i> GitHub
                         </a>
                     </li>
@@ -199,16 +203,17 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <p class="lead mb-4">
-                        Mental health issues have emerged as a major global public health challenge, with 71% of people with mental disorders in low-income countries lacking access to timely psychological treatment. 
+                        Mental health issues have emerged as a major global public health challenge, with 71% of people with mental disorders in low-income countries lacking access to timely psychological treatment.
                         While Multimodal Large Language Models (MLLMs) show great potential in AI-driven psychological counseling, their development is severely hindered by the scarcity of high-quality multimodal counseling data, due to privacy constraints, insufficient professional annotations, and poor emotional expressiveness of existing synthetic data.
                     </p>
                     <p class="mb-4">
-                        To address these challenges, we construct the <strong>GMPC (Generated Multimodal Psychological Counseling) Dataset</strong>, a high-quality tri-modal benchmark enriched with fine-grained psychological annotations for downstream MLLM training and evaluation in mental health support. It fills the gap of high-quality multimodal datasets in the psychological counseling field, and establishes a reliable foundation for related MLLM research.
+                        To address these challenges, we construct the <strong>GMPC (Generated Multimodal Psychological Counseling) Dataset</strong>, the first high-quality tri-modal dataset generated via the Therapeutic Generation Pipeline (TGP), a multi-agent three-stage “text-audio-video” synthesizing pipeline.
+                        GMPC comprises bilingual counseling dialogs derived from authentic psychological counseling conversations, and includes 8 categories of psychotherapy-grounded annotations (e.g., therapist’s strategy and client’s emotion) validated by certified psychological counselors.
                     </p>
                     <div class="row mt-5 g-4">
                         <div class="col-md-3 col-sm-6">
                             <div class="card text-center p-4">
-                                <h3 class="text-primary fw-bold">951</h3>
+                                <h3 class="text-primary fw-bold">816</h3>
                                 <p class="mb-0">Bilingual Counseling Sessions</p>
                             </div>
                         </div>
@@ -302,7 +307,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card p-4">
-                        <h5 class="fw-bold text-center mb-4">Dialog Topic Distribution</h5>
+                        <h5 class="fw-bold text-center mb-4">Dialog Topic Distribution (10+ Themes)</h5>
                         <canvas id="topicChart" width="400" height="400"></canvas>
                     </div>
                 </div>
@@ -335,43 +340,43 @@
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            <td><strong>Background</strong></td>
+                                            <td>Dialog context containing the reason for consultation and the client’s identity</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Client’s emotion</strong></td>
+                                            <td>Clients’ emotions in every utterance</td>
+                                            <td>Neutral, Anxiety, Happy</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Guide</strong></td>
+                                            <td>Guidelines for therapists’ speech in certain psychological treatment methods</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Psychotherapy</strong></td>
+                                            <td>Psychological treatment methods adopted by therapists</td>
+                                            <td>SFBT, CBT, Psychoanalytic</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Reasoning</strong></td>
+                                            <td>Explanatory text related to the dialog</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Stage</strong></td>
+                                            <td>The progress of psychological counseling</td>
+                                            <td>-</td>
+                                        </tr>
+                                        <tr>
                                             <td><strong>Topic</strong></td>
                                             <td>The main psychological problem of client</td>
                                             <td>Depression, Appearance anxiety, Partner relationship</td>
                                         </tr>
                                         <tr>
-                                            <td><strong>Background</strong></td>
-                                            <td>Dialog context containing consultation reason and client identity</td>
-                                            <td>-</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Stage</strong></td>
-                                            <td>The period in which psychological issues are developing</td>
-                                            <td>-</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Guide</strong></td>
-                                            <td>Guidelines for therapists' speech in psychotherapy methods</td>
-                                            <td>-</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Psychotherapy</strong></td>
-                                            <td>Psychological treatment methods adopted by the therapist</td>
-                                            <td>SFBT, CBT, Psychoanalytic</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Reasoning</strong></td>
-                                            <td>Reason for the therapist to use a specific treatment method</td>
-                                            <td>-</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Client's emotion</strong></td>
-                                            <td>Clients' emotions in every utterance</td>
-                                            <td>Neutral, Anxiety, Happy</td>
-                                        </tr>
-                                        <tr>
-                                            <td><strong>Therapist's strategy</strong></td>
-                                            <td>Behavioral strategies taken by the therapist per utterance</td>
+                                            <td><strong>Therapist’s strategy</strong></td>
+                                            <td>Behavioral strategies adopted in each utterance</td>
                                             <td>Question, Reflection of feelings, Reassurance</td>
                                         </tr>
                                     </tbody>
@@ -396,7 +401,7 @@
                                 This study adheres to academic and global privacy guidelines including GDPR. All raw textual data are sourced from public, ethically compliant counseling resources with strict anonymization of personally identifiable information.
                             </li>
                             <li class="mb-3">
-                                Synthetic audio/video content of GMPC is generated without replicating biometrics of real individuals, and validated by 5 licensed psychological experts to avoid harmful or misleading information.
+                                Synthetic audio/video content of GMPC is generated without replicating biometrics of real individuals, and validated by licensed psychological experts to avoid harmful or misleading information.
                             </li>
                             <li>
                                 The GMPC dataset is restricted to <strong>academic research only</strong>, and is prohibited for commercial or clinical use. We prioritize ethical integrity to mitigate risks while supporting AI research on mental health.
@@ -413,7 +418,7 @@
         <div class="container">
             <h2 class="section-title">Dataset Demo Video</h2>
             <div class="row justify-content-center">
-                <div class="col-lg-10">
+                <div class="col-lg-8 col-md-10">
                     <div class="video-container">
                         <!-- 注意：这里必须使用相对路径（不要用 /xxx 这种根路径），否则挂到子路径（/repo/）下会找不到资源 -->
                         <video controls preload="metadata" poster="">
@@ -440,19 +445,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- 图表初始化脚本 -->
     <script>
-        // 话题分布饼图
+        // 话题分布饼图（Figure 3）
         const topicCtx = document.getElementById('topicChart').getContext('2d');
         new Chart(topicCtx, {
             type: 'pie',
             data: {
-                labels: ['Social Issues', 'Partner Relationship', 'Child-Parent Relationship', 'Appearance Anxiety', 'Depression', 'School Bullying', 'Friend Problems'],
+                labels: [
+                    'Depression',
+                    'Partner Relationship',
+                    'Child-Parent Relationship',
+                    'Appearance Anxiety',
+                    'Academic Pressure',
+                    'Job Crisis',
+                    'School Bullying',
+                    'Friend Problems',
+                    'Procrastination',
+                    'Other',
+                ],
                 datasets: [{
-                    data: [45.1, 21.3, 18.9, 11.8, 8.81, 2.58, 1.51],
+                    data: [21.7, 21.3, 18.9, 11.8, 8.81, 7.73, 2.58, 2.36, 1.5, 3.33],
                     backgroundColor: [
-                        '#0f3460', '#1a508b', '#3282b8', '#0077b6', '#0096c7', '#48cae4', '#90e0ef'
+                        '#0f3460',
+                        '#1a508b',
+                        '#3282b8',
+                        '#0077b6',
+                        '#0096c7',
+                        '#00b4d8',
+                        '#48cae4',
+                        '#90e0ef',
+                        '#caf0f8',
+                        '#adb5bd',
                     ],
-                    borderWidth: 1
-                }]
+                    borderWidth: 1,
+                }],
             },
             options: {
                 responsive: true,
@@ -462,24 +487,28 @@
                     },
                     tooltip: {
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 return `${context.label}: ${context.raw}%`;
-                            }
-                        }
-                    }
-                }
-            }
+                            },
+                        },
+                    },
+                },
+            },
         });
 
-        // 导航栏滚动效果
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
+        // 导航栏滚动效果（仅处理站内锚点；避免拦截 GitHub 外链）
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+            link.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
+                if (!targetElement) {
+                    return;
+                }
+
+                e.preventDefault();
                 window.scrollTo({
                     top: targetElement.offsetTop - 70,
-                    behavior: 'smooth'
+                    behavior: 'smooth',
                 });
             });
         });
