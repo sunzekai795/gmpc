@@ -1,0 +1,17 @@
+# Machine-specific paths (edit this file on your machine)
+
+# LLM callable can be either:
+#   - "some.module:generate" (module import)
+#   - "./user_provided/llm_caller.py:generate" (file import)
+llm_callable: "./user_provided/llm_caller.py:generate"
+
+# Orpheus environment python executable.
+# Example: /opt/conda/envs/orpheus/bin/python
+orpheus_python: null
+
+# LatentSync repo and python.
+# Example:
+#   latentsync_repo_dir: /path/to/LatentSync
+#   latentsync_python: /opt/conda/envs/latentsync/bin/python
+latentsync_repo_dir: null
+latentsync_python: null

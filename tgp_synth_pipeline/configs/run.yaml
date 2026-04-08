@@ -1,0 +1,48 @@
+paths:
+  # You must provide your own turns jsonl.
+  input_turns_jsonl: ./YOUR_TURNS.jsonl
+  output_dir: ./outputs
+
+  # Machine-specific toolchain config.
+  toolchain_yaml: ./user_provided/toolchain.yaml
+
+llm:
+  # Will be overridden by toolchain.yaml if llm_callable is set.
+  callable: ./user_provided/llm_caller.py:generate
+  max_retries: 2
+
+annotation:
+  self_consistency_votes: 3
+
+orpheus:
+  # Options: subprocess | inprocess | dummy
+  backend: subprocess
+  # Will be overridden by toolchain.yaml if orpheus_python is set.
+  python: null
+  model_name: canopylabs/orpheus-tts-0.1-finetune-prod
+  voice: tara
+  use_emotion_reasoning: true
+  insert_paralinguistic_if_missing: true
+  out_sample_rate: 44100
+
+video_rag:
+  enabled: true
+  segment_seconds: 30
+  keyframe_fps: 1.0
+  max_keyframes_per_segment: 32
+  clip_model: ViT-B-32
+  clip_pretrained: openai
+  top_k: 5
+
+latentsync:
+  # Options: subprocess | dummy
+  backend: subprocess
+  repo_dir: null
+  python: null
+  unet_config_path: configs/unet/stage2_512.yaml
+  inference_ckpt_path: checkpoints/latentsync_unet.pt
+  inference_steps: 20
+  guidance_scale: 1.5
+  enable_deepcache: true
+  resolution: 512
+  temp_root: latentsync_tmp
